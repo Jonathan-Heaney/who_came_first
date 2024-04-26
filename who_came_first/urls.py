@@ -1,5 +1,5 @@
 """
-URL configuration for who_came_firstt project.
+URL configuration for who_came_first project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
