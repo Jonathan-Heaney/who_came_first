@@ -7,3 +7,4 @@ staticfiles
 .platform
 .vscode/
 venv/
+db.sqlite3
