@@ -22,6 +22,7 @@ def get_people(request):
     random_index1 = random.randint(0, valid_person_count - 1)
     person1 = valid_persons[random_index1]
     random_index2 = random.randint(0, valid_person_count - 1)
+
     while random_index2 == random_index1:
         random_index2 = random.randint(0, valid_person_count - 1)
     person2 = valid_persons[random_index2]
@@ -50,3 +51,10 @@ def prepare_person_data(person):
 def generate_wikipedia_link(name):
     formatted_name = urllib.parse.quote(name.replace(" ", "_"))
     return f"https://en.wikipedia.org/wiki/{formatted_name}"
+
+
+def compare_ages(person1, person2):
+    if person1.birthyear < person2.birthyear:
+        return "Person 1"
+    else:
+        return "Person 2"
