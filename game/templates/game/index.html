@@ -11,11 +11,33 @@
         <div class="person">
             <p>{{person1.name}}</p>
             <p>{{person1.occupation}}</p>
+            {% if not response %}
+                <form action="{% url 'check-answer' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="person_id" value="{{ person1.id }}">
+                    <button type="submit" class="generate-btn">Guess Figure 1</button>
+                </form>
+            {% endif %}
         </div>
         <div class="person">
             <p>{{person2.name}}</p>
             <p>{{person2.occupation}}</p>
+            {% if not response %}
+                <form action="{% url 'check-answer' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="person_id" value="{{ person2.id }}">
+                    <button type="submit" class="generate-btn">Guess Figure 2</button>
+                </form>
+            {% endif %}
         </div>
+        {% if response %}
+            <p>{{ response }}</p>
+            <p>{{person1.name}} was born in {{person1.birthyear}}. {{person2.name}} was born in {{person2.birthyear}}.</p>
+            <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="generate-btn">Play Again</button>
+            </form>
+        {% endif %}
     </div>
 </body>
 </html>

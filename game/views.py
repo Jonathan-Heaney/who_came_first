@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
+
 from .models import FamousPerson
 import random
 import urllib.parse
@@ -7,12 +9,35 @@ import urllib.parse
 
 
 def index(request):
-    person1, person2 = get_people(request)
-    print(person1, person2)
+    if 'person1_id' not in request.session or 'person2_id' not in request.session:
+        person1, person2 = get_people(request)
+        request.session['person1_id'] = person1["id"]
+        request.session['person2_id'] = person2["id"]
+        request.session['person1_birthyear'] = person1["birthyear"]
+        request.session['person2_birthyear'] = person2["birthyear"]
+    else:
+        person1 = FamousPerson.objects.get(id=request.session['person1_id'])
+        person2 = FamousPerson.objects.get(id=request.session['person2_id'])
+    # person1 = request.session.pop('person1', None)
+    # person2 = request.session.pop('person2', None)
+    # if person1 and person2:
+    #     correct_answer = compare_ages(person1, person2)
+    #     print(f"Correct answer: {correct_answer}")
+
+    # chosen_answer = request.session.pop('chosen_person_id', None)
+    # print(f"Chosen answer: {chosen_answer}")
+
+    # if chosen_answer and correct_answer:
+    #     if chosen_answer == correct_answer["id"]:
+    #         answer_response = "Correct!"
+    #     else:
+    #         answer_response = "Incorrect!"
+    # else:
+    #     answer_response = None
 
     return render(request, "game/index.html", {
         "person1": person1,
-        "person2": person2
+        "person2": person2,
     })
 
 
@@ -54,7 +79,37 @@ def generate_wikipedia_link(name):
 
 
 def compare_ages(person1, person2):
-    if person1.birthyear < person2.birthyear:
-        return "Person 1"
+    if person1["birthyear"] < person2["birthyear"]:
+        return person1
     else:
-        return "Person 2"
+        return person2
+
+
+@ require_POST
+def check_answer(request):
+    if 'person1_id' not in request.session or 'person2_id' not in request.session:
+        return redirect('index')
+
+    correct_id = min(request.session['person1_id'], request.session['person2_id'],
+                     key=lambda id: FamousPerson.objects.get(id=id).birthyear)
+
+    print(f"Correct ID: {correct_id}")
+    person_id = request.POST.get('person_id')
+    print(f"Person ID: {person_id}")
+
+    if int(person_id) == int(correct_id):
+        response = "Correct"
+    else:
+        response = "Incorrect"
+
+    person1 = FamousPerson.objects.get(id=request.session['person1_id'])
+    person2 = FamousPerson.objects.get(id=request.session['person2_id'])
+
+    del request.session['person1_id']
+    del request.session['person2_id']
+
+    return render(request, 'game/index.html', {
+        'response': response,
+        'person1': person1,
+        'person2': person2
+    })
