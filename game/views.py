@@ -18,22 +18,6 @@ def index(request):
     else:
         person1 = FamousPerson.objects.get(id=request.session['person1_id'])
         person2 = FamousPerson.objects.get(id=request.session['person2_id'])
-    # person1 = request.session.pop('person1', None)
-    # person2 = request.session.pop('person2', None)
-    # if person1 and person2:
-    #     correct_answer = compare_ages(person1, person2)
-    #     print(f"Correct answer: {correct_answer}")
-
-    # chosen_answer = request.session.pop('chosen_person_id', None)
-    # print(f"Chosen answer: {chosen_answer}")
-
-    # if chosen_answer and correct_answer:
-    #     if chosen_answer == correct_answer["id"]:
-    #         answer_response = "Correct!"
-    #     else:
-    #         answer_response = "Incorrect!"
-    # else:
-    #     answer_response = None
 
     return render(request, "game/index.html", {
         "person1": person1,
@@ -76,13 +60,6 @@ def prepare_person_data(person):
 def generate_wikipedia_link(name):
     formatted_name = urllib.parse.quote(name.replace(" ", "_"))
     return f"https://en.wikipedia.org/wiki/{formatted_name}"
-
-
-def compare_ages(person1, person2):
-    if person1["birthyear"] < person2["birthyear"]:
-        return person1
-    else:
-        return person2
 
 
 @ require_POST
