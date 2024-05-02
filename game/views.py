@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
-
 from .models import FamousPerson
 import random
 import urllib.parse
-
-# Create your views here.
 
 
 def index(request):
