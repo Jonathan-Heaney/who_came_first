@@ -72,9 +72,9 @@ def check_answer(request):
     print(f"Person ID: {person_id}")
 
     if int(person_id) == int(correct_id):
-        response = "Correct"
+        response = "Correct!"
     else:
-        response = "Incorrect"
+        response = "Incorrect!"
 
     person1 = FamousPerson.objects.get(id=request.session['person1_id'])
     person2 = FamousPerson.objects.get(id=request.session['person2_id'])
@@ -82,8 +82,19 @@ def check_answer(request):
     del request.session['person1_id']
     del request.session['person2_id']
 
+    person1_data = prepare_person_data(person1)
+
+    person2_data = prepare_person_data(person2)
+
+    person1_wikipedia = person1_data["wikipedia_link"]
+    person2_wikipedia = person2_data["wikipedia_link"]
+
+    print(person1_wikipedia)
+
     return render(request, 'game/index.html', {
         'response': response,
         'person1': person1,
-        'person2': person2
+        'person2': person2,
+        "person1_wikipedia": person1_wikipedia,
+        "person2_wikipedia": person2_wikipedia
     })

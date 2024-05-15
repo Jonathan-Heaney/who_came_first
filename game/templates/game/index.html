@@ -32,7 +32,7 @@
         </div>
         {% if response %}
             <p>{{ response }}</p>
-            <p>{{person1.name}} was born in {{person1.birthyear}}. {{person2.name}} was born in {{person2.birthyear}}.</p>
+            <p><a href="{{person1_wikipedia}}" target="_blank">{{person1.name}}</a>  was born in {{person1.birthyear}}. <a href="{{person2_wikipedia}}" target="_blank">{{person2.name}}</a>  was born in {{person2.birthyear}}.</p>
             <form action="{% url 'index' %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="generate-btn">Play Again</button>
