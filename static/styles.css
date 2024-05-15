@@ -1,0 +1,96 @@
+/* Basic reset for styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.person {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+.person p {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.generate-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.generate-btn:hover {
+  background-color: #0056b3;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Larger Screens */
+@media (min-width: 768px) {
+  .person {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .person p {
+    flex: 1;
+    margin: 0 10px;
+  }
+
+  .generate-btn {
+    max-width: 200px;
+    margin-left: auto; /* Align the button to the right */
+  }
+}
+
+/* Further adjustments for even larger screens */
+@media (min-width: 1024px) {
+  body {
+    font-size: 18px; /* Increase font size for better readability on larger screens */
+  }
+
+  .container {
+    padding: 40px; /* More padding for a better look on larger screens */
+  }
+}
